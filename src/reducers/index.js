@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
-import todos from "./todos";
+import tasks from "./tasks";
+import { userLogin } from "./userLogin";
 
 export default combineReducers({
-  todos
+  tasks,
+  isLoggedIn: userLogin,
 });

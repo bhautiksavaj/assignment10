@@ -1,20 +1,29 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addTask } from "../actions";
 
-const AddTask = ({ onAdd }) => {
+const AddTask = () => {
   const [text, setText] = useState("");
   const [day, setDay] = useState("");
   const [reminder, setReminder] = useState(false);
+  const dispatch = useDispatch();
+  const userName = useSelector((state) => state.isLoggedIn.userName);
+  const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn);
+  console.log(userName);
 
-  const onSubmit = (e) => {
+  function onSubmit(e) {
     e.preventDefault();
-
+    if (!isLoggedIn) {
+      alert("you are not logged in");
+      return;
+    }
     if (!text) {
       alert("Please add a task");
       return;
     }
-    onAdd({ text, day, reminder });
+    dispatch(addTask(text, day, reminder, userName));
     clearInput();
-  };
+  }
 
   const clearInput = () => {
     setText("");
